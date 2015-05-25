@@ -1,0 +1,8 @@
+{
+    "name": "php-class-tree",
+    "version": "0.0.1",
+    "main": "./lib/php-class-tree",
+    "activationCommands": {
+        "atom-workspace": "php-class-tree:toggle"
+    }
+}
