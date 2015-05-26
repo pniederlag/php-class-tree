@@ -38,20 +38,20 @@
 			padding-right: 10px;
 		}
 	}
-	// 
-	// > .contents {
-	// 	position: absolute;
-	// 	top: 0;
-	// 	left: 0;
-	// 	right: 0;
-	// 	bottom: 0;
-	// 	z-index: 3;
-	// 	opacity: 0.33;
-	// 	display: flex;
-	// 	-webkit-box-align: center;
-	// 	align-items: center;
-	// 	text-align: center;
-	// 	justify-content: center;
-	// }
 
+	.tree-badges::after {
+		position: absolute;
+		right: 10px;
+	}
+
+	.icon-class::before { content: 'C' }
+	.icon-interface::before { content: 'I' }
+	.icon-method::before { content: 'M' }
+	.icon-argument::before { content: 'V' }
+
+	.icon-abstract::after { content: 'A' }
+	.icon-extends::after { content: 'E' }
+	.icon-final::after { content: 'F' }
+	.icon-implements::after { content: 'I' }
+	.icon-static::after { content: 'S' }
 }
