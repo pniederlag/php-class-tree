@@ -4,6 +4,13 @@
 // for a full listing of what's available.
 @import "ui-variables";
 
+@font-face {
+	font-family: 'icomoon';
+	font-weight: normal;
+	font-style: normal;
+	src: url(atom://php-class-tree/resources/fonts/icomoon.woff) format('woff');
+}
+
 .php-class-tree-view {
 	position: relative;
 	width: 200px;
@@ -44,14 +51,15 @@
 		right: 10px;
 	}
 
-	.icon-class::before { content: 'C' }
-	.icon-interface::before { content: 'I' }
-	.icon-method::before { content: 'M' }
-	.icon-argument::before { content: 'V' }
+	.name::before {
+		font-family: 'icomoon';
+		content: attr(data-content-before);
+	}
 
-	.icon-abstract::after { content: 'A' }
-	.icon-extends::after { content: 'E' }
-	.icon-final::after { content: 'F' }
-	.icon-implements::after { content: 'I' }
-	.icon-static::after { content: 'S' }
+	.name::after {
+		position: absolute;
+		right: 10px;
+		font-family: 'icomoon';
+		content: attr(data-content-after);
+	}
 }

@@ -1,0 +1,12 @@
+
+# Please enter the commit message for your changes. Lines starting
+# with '#' will be ignored, and an empty message aborts the commit.
+#
+# On branch master
+# Your branch is up-to-date with 'origin/master'.
+# Changes to be committed:
+# 	deleted:    COMMIT_EDITMSG
+# 	modified:   lib/views/class-view.js
+# 	new file:   resources/.DS_Store
+# 	new file:   resources/fonts/icomoon.woff
+# 	modified:   styles/php-class-tree.less
