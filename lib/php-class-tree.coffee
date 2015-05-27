@@ -118,8 +118,8 @@ scanText = (text) ->
 module.exports =
   activate: ->
     @build()
-    atom.workspaceView.command 'php-class-tree:build', => @build()
-    atom.workspaceView.command 'php-class-tree:toggle', => @toggle()
+    atom.commands.add 'atom-workspace', 'php-class-tree:build', => @build()
+    atom.commands.add 'atom-workspace', 'php-class-tree:toggle', => @toggle()
     return
 
   build: ->
