@@ -1,7 +1,13 @@
 {
     "name": "php-class-tree",
-    "version": "0.0.1",
     "main": "./lib/php-class-tree",
+    "version": "0.0.0",
+    "description": "Shows PHP classes as tree view with navigation",
+    "repository": "https://github.com/pinguinjkeke/php-class-tree",
+    "license": "MIT",
+    "engines": {
+        "atom": ">=0.174.0"
+    },
     "activationCommands": {
         "atom-workspace": "php-class-tree:toggle"
     },
