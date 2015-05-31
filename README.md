@@ -1,7 +1,7 @@
 # php-class-tree
 Atom package building class tree with functions and arguments as treeView.
 
-![Preview](https://github.com/pinguinjkeke/php-class-tree/blob/master/preview.gif "PHP Class Tree preview")
+![Preview](https://github.com/pinguinjkeke/php-class-tree/blob/master/preview.gif?raw=true "PHP Class Tree preview")
 
 You are welcome to report any issue or pull your request. Your help and feedback are important for me!
 
