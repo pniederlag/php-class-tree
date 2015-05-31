@@ -1,7 +1,7 @@
 {
   "name": "php-class-tree",
   "main": "./lib/php-class-tree",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Shows PHP classes as tree view with navigation",
   "repository": "https://github.com/pinguinjkeke/php-class-tree",
   "license": "MIT",
