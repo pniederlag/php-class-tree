@@ -1,4 +1,4 @@
-{XRegExp} = require './xregexp'
+{XRegExp} = require 'xregexp'
 {Point} = require 'atom'
 TreeView = require './views/tree-view'
 
