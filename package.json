@@ -1,7 +1,7 @@
 {
   "name": "php-class-tree",
   "main": "./lib/php-class-tree",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "description": "Shows PHP classes as tree view with navigation",
   "keywords": [
     "code-navigator",
