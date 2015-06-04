@@ -2,8 +2,8 @@
 {Point} = require 'atom'
 TreeView = require './views/tree-view'
 
-phpRegExp = '[a-zA-Z_\\x7f-\\xff][a-zA-Z0-9_\\x7f-\\xff]*'
-classRegExp = new XRegExp '(?:(?<abstract>abstract)\\s+)?(?<type>class|interface)\\s+(?<name>' + phpRegExp + ')(?:\\s+extends\\s+(?<extends>' + phpRegExp + ')|\\s+implements\\s+(?<implements>' + phpRegExp + '))*\\s*{', 'i'
+phpRegExp = '\\\\?[a-zA-Z_\\x7f-\\xff][\\\\a-zA-Z0-9_\\x7f-\\xff]*'
+classRegExp = new XRegExp '(?:(?<abstract>abstract)\\s+)?(?<type>class|interface)\\s+(?<name>' + phpRegExp + ')(?:\\s+extends\\s+(?<extends>' + phpRegExp + '))?(?:\\s+implements\\s+(?<implements>' + phpRegExp + '))?\\s*{', 'i'
 methodRegExp = new XRegExp '(?:(?<abstract>abstract)\\s+)?(?:(?<access>private|protected|public)\\s+)?(?:(?<static>static)\\s+)?function\\s+(?<name>' + phpRegExp + ')\\s*\\(', 'i'
 argumentRegExp = new XRegExp '(?:(?<type>' + phpRegExp + ')\\s+)?\\$(?<name>' + phpRegExp + ')', 'i'
 
@@ -68,7 +68,7 @@ getPoint = (text, index) ->
       row++
       lastLineCursor = cursor
     cursor++
-  column = index - lastLineCursor
+  column = index - lastLineCursor - 1
   return new Point row, column
 
 matchBracket = (text, index, bracket) ->
@@ -126,7 +126,6 @@ module.exports =
     editor = atom.workspace.getActiveTextEditor()
     text = editor.getText()
     matches = scanText text
-    console.log matches
     if @treeView?
       @treeView.detach()
     @treeView = new TreeView matches

@@ -9,4 +9,4 @@ Future plans:
 - Support of other languages (It wasn't too hard to parse PHP through regex. Idk what about other languages)
 - Support of namespaces in PHP
 - ...
-- Maybe you can tell help me find out new futures? fill an issue (https://github.com/pinguinjkeke/php-class-tree/issues) ;-)
+- Maybe you can help me find out new features? fill an issue (https://github.com/pinguinjkeke/php-class-tree/issues) ;-)
