@@ -9,4 +9,8 @@ Future plans:
 - Support of other languages (It wasn't too hard to parse PHP through regex. Idk what about other languages)
 - Support of namespaces in PHP
 - ...
+<<<<<<< HEAD
 - Maybe you can help me find out new features? fill an issue (https://github.com/pinguinjkeke/php-class-tree/issues) ;-)
+=======
+- Maybe you can help me find out new features? Just fill an issue (https://github.com/pinguinjkeke/php-class-tree/issues) ;-)
+>>>>>>> c0151e74fc23f3347171c2195f306e9b7a37389a
