@@ -2,6 +2,7 @@
 {Point} = require 'atom'
 TreeView = require './views/tree-view'
 
+# Expressions must use double \\ Thats the cost for great XRegExp library
 phpRegExp = '\\\\?[a-zA-Z_\\x7f-\\xff][\\\\a-zA-Z0-9_\\x7f-\\xff]*'
 classRegExp = new XRegExp '(?:(?<abstract>abstract)\\s+)?(?<type>class|interface)\\s+(?<name>' + phpRegExp + ')(?:\\s+extends\\s+(?<extends>' + phpRegExp + '))?(?:\\s+implements\\s+(?<implements>' + phpRegExp + '))?\\s*{', 'i'
 methodRegExp = new XRegExp '(?:(?<abstract>abstract)\\s+)?(?:(?<access>private|protected|public)\\s+)?(?:(?<static>static)\\s+)?function\\s+(?<name>' + phpRegExp + ')\\s*\\(', 'i'
@@ -59,6 +60,7 @@ ArgumentEntry = (name, type, point) ->
   @type = if type? then type else 'var'
   return
 
+# Returns atom's Point object by text index
 getPoint = (text, index) ->
   cursor = 0
   row = 0
@@ -71,6 +73,8 @@ getPoint = (text, index) ->
   column = index - lastLineCursor - 1
   return new Point row, column
 
+# Matching bracket
+# TODO: is it possible to use Atom Bracket Matcher as it much better?
 matchBracket = (text, index, bracket) ->
   switch bracket
     when '(', ')'
@@ -92,28 +96,56 @@ matchBracket = (text, index, bracket) ->
     index++
 
 scanText = (text) ->
+  # Number of class
   classIndex = 0
+  # Array of classes
   classes = []
+  # Array of class start and end indexes
+  classRanges = []
+  # Array of method start indexes
+  methodIndexes = []
+  # The final array
+  root = []
+
+  # Finding classes
   while classResult = XRegExp.exec text, classRegExp, classIndex
     classIndex = classResult.index + classResult[0].length
     classEnd = matchBracket text, classIndex
-    classEntry = new ClassEntry classResult.name, classResult.type, classResult.abstract, classResult.extends, classResult.implements, getPoint text, classResult.index
-    methodIndex = classIndex
-    while methodResult = XRegExp.exec text, methodRegExp, methodIndex
-      if methodResult.index > classEnd
+    # Creating class object
+    classes.push new ClassEntry classResult.name, classResult.type, classResult.abstract, classResult.extends, classResult.implements, getPoint text, classResult.index
+    classRanges.push {start: classIndex, end: classEnd}
+  classIndex = 0
+  methodIndex = 0
+  methods = []
+  # Finding methods
+  while methodResult = XRegExp.exec text, methodRegExp, methodIndex
+    methodIndex = methodResult.index + methodResult[0].length
+    methodEnd = matchBracket text, methodIndex, ')'
+    methodEntry = new MethodEntry methodResult.name, methodResult.abstract, methodResult.access, methodResult.static, getPoint text, methodResult.index
+    methodIndexes.push methodResult.index
+    argumentIndex = methodIndex
+    while argumentResult = XRegExp.exec text, argumentRegExp, argumentIndex
+      if argumentResult.index > methodEnd
         break
-      methodIndex = methodResult.index + methodResult[0].length
-      methodEnd = matchBracket text, methodIndex, ')'
-      methodEntry = new MethodEntry methodResult.name, methodResult.abstract, methodResult.access, methodResult.static, getPoint text, methodResult.index
-      argumentIndex = methodIndex
-      while argumentResult = XRegExp.exec text, argumentRegExp, argumentIndex
-        if argumentResult.index > methodEnd
-          break
-        argumentIndex = argumentResult.index + argumentResult[0].length
-        methodEntry.arguments.push new ArgumentEntry argumentResult.name, argumentResult.type, getPoint text, argumentResult.index
-      classEntry.methods.push methodEntry
-    classes.push classEntry
-  return classes
+      argumentIndex = argumentResult.index + argumentResult[0].length
+      methodEntry.arguments.push new ArgumentEntry argumentResult.name, argumentResult.type, getPoint text, argumentResult.index
+    methods.push methodEntry
+
+  methodIndex = 0
+  classIndex = 0
+  # Putting methods to classes or to the root
+  while methodIndex < methods.length or classIndex < classes.length
+    if classes[classIndex]? and methods[methodIndex]? and methodIndexes[methodIndex] > classRanges[classIndex].start and methodIndexes[methodIndex] < classRanges[classIndex].end
+      classes[classIndex].methods.push methods[methodIndex]
+      methods.splice methodIndex, 1
+      methodIndexes.splice methodIndex, 1
+    else if (classes[classIndex]? and methodIndexes[methodIndex] > classRanges[classIndex].end) or (classes[classIndex]? and !methods[methodIndex]?)
+      root.push classes[classIndex]
+      classIndex++
+    else
+      root.push methods[methodIndex]
+      methodIndex++
+  return root
 
 module.exports =
   activate: ->
@@ -128,6 +160,7 @@ module.exports =
     matches = scanText text
     if @treeView?
       @treeView.detach()
+    # Is it right way sending this arrays to TreeView constructor?
     @treeView = new TreeView matches
     @treeView.attach()
     return
