@@ -1,0 +1,12 @@
+'menu': [
+  {
+    'label': 'Packages'
+    'submenu': [
+      'label': 'PHP Class Tree'
+      'submenu': [
+        { label: 'Toggle', command: 'php-class-tree:toggle' },
+        { label: 'Rebuild tree', command: 'php-class-tree:rebuild' },
+      ]
+    ]
+  }
+]
